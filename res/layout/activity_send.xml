@@ -77,7 +77,7 @@
             android:text="Goods or Services" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/textViewPhoneOrEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="54dp"

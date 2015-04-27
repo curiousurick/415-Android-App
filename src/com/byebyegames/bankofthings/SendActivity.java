@@ -48,7 +48,7 @@ public class SendActivity extends ActionBarActivity {
 		et_to = (EditText)findViewById(R.id.editText0);
 		et_amount = (EditText)findViewById(R.id.editText1);
 		et_message = (EditText)findViewById(R.id.editText2);
-		funds = (TextView)findViewById(R.id.textView2);
+		funds = (TextView)findViewById(R.id.textViewPhoneOrEmail);
 		
 		//TODO: update funds
 		Random r = new Random();

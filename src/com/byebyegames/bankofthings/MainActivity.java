@@ -50,7 +50,7 @@ public class MainActivity extends ActionBarActivity {
 		button_login.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
             	// leash to text view
-                TextView debugDisplay = (TextView) findViewById(R.id.textView2);
+                TextView debugDisplay = (TextView) findViewById(R.id.textViewPhoneOrEmail);
                 
                 // declare temp variables
                 String loginID = "";
