@@ -1,44 +1,60 @@
 package com.byebyegames.bankofthings;
 
 import android.support.v7.app.ActionBarActivity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.ListView;
 
-public class HistoryActivity extends ActionBarActivity {
-	
-	Button button_back;
-	ListView lv_recieved;
+public class ConfirmationActivity extends ActionBarActivity {
 
+	Button button_back, button_cancel, button_send;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_history);
-		
+		setContentView(R.layout.activity_confirmation);
+
 		button_back = (Button) findViewById(R.id.buttonback);
-		
-		button_back.setOnClickListener(new View.OnClickListener() {
-			
+		button_cancel = (Button) findViewById(R.id.buttoncancel);
+		button_send = (Button) findViewById(R.id.buttonsend);
+
+		button_send.setOnClickListener(new View.OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent i = new Intent(getApplicationContext(), SendActivity.class);
-                startActivity(i);
+				Intent i = new Intent(getApplicationContext(), SentActivity.class);
+                startActivityForResult(i, 8);
+			}
+		});
+		button_back.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				System.exit(0);
 			}
 		});
 		
+		button_cancel.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				finishActivity(0);
+				// TODO Auto-generated method stub
+				Intent i = new Intent(getApplicationContext(), SendActivity.class);
+				i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                startActivity(i);
+			}
+		});
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.history, menu);
+		getMenuInflater().inflate(R.menu.confirmation, menu);
 		return true;
 	}
 

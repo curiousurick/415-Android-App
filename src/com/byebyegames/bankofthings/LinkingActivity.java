@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Debug;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,17 +15,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class Registration extends ActionBarActivity {
+public class LinkingActivity extends ActionBarActivity {
 
 	Button[] button_numbers;
 	
-	Button button_abc, button_del, button_next;
-	EditText tv_phoneOrEmail;
+	Button button_abc, button_del, button_next, button_skip;
+	EditText tv_dollars;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_registration);
+		setContentView(R.layout.activity_linking);
 		
 		// initialize button array
 		button_numbers = new Button[10];
@@ -39,14 +41,14 @@ public class Registration extends ActionBarActivity {
 		button_numbers[7] = (Button) findViewById(R.id.button7);
 		button_numbers[8] = (Button) findViewById(R.id.button8);
 		button_numbers[9] = (Button) findViewById(R.id.button9);
-		
+
 		button_next = (Button) findViewById(R.id.buttonnext);
+		button_skip = (Button) findViewById(R.id.buttonskip);
 		button_abc = (Button) findViewById(R.id.buttonabc);
 		button_del = (Button) findViewById(R.id.buttondel);
 		
 		// leash text view
-		tv_phoneOrEmail = (EditText) findViewById(R.id.textViewPhoneOrEmail);
-		
+		tv_dollars = (EditText) findViewById(R.id.textViewDollars);
 		
 		// initialize button on click methods
 		initializeButtons();
@@ -78,7 +80,7 @@ public class Registration extends ActionBarActivity {
 			@Override
 			public void onClick(View v) 
 			{
-				tv_phoneOrEmail.setText(tv_phoneOrEmail.getText() + "0");
+				tv_dollars.setText(tv_dollars.getText() + "0");
 			}
 		});
 		button_numbers[1].setOnClickListener(new View.OnClickListener() 
@@ -86,7 +88,7 @@ public class Registration extends ActionBarActivity {
 			@Override
 			public void onClick(View v) 
 			{
-				tv_phoneOrEmail.setText(tv_phoneOrEmail.getText() + "1");
+				tv_dollars.setText(tv_dollars.getText() + "1");
 			}
 		});
 		button_numbers[2].setOnClickListener(new View.OnClickListener() 
@@ -94,7 +96,7 @@ public class Registration extends ActionBarActivity {
 			@Override
 			public void onClick(View v) 
 			{
-				tv_phoneOrEmail.setText(tv_phoneOrEmail.getText() + "2");
+				tv_dollars.setText(tv_dollars.getText() + "2");
 			}
 		});
 		button_numbers[3].setOnClickListener(new View.OnClickListener() 
@@ -102,7 +104,7 @@ public class Registration extends ActionBarActivity {
 			@Override
 			public void onClick(View v) 
 			{
-				tv_phoneOrEmail.setText(tv_phoneOrEmail.getText() + "3");
+				tv_dollars.setText(tv_dollars.getText() + "3");
 			}
 		});
 		button_numbers[4].setOnClickListener(new View.OnClickListener() 
@@ -110,7 +112,7 @@ public class Registration extends ActionBarActivity {
 			@Override
 			public void onClick(View v) 
 			{
-				tv_phoneOrEmail.setText(tv_phoneOrEmail.getText() + "4");
+				tv_dollars.setText(tv_dollars.getText() + "4");
 			}
 		});
 		button_numbers[5].setOnClickListener(new View.OnClickListener() 
@@ -118,7 +120,7 @@ public class Registration extends ActionBarActivity {
 			@Override
 			public void onClick(View v) 
 			{
-				tv_phoneOrEmail.setText(tv_phoneOrEmail.getText() + "5");
+				tv_dollars.setText(tv_dollars.getText() + "5");
 			}
 		});
 		button_numbers[6].setOnClickListener(new View.OnClickListener() 
@@ -126,7 +128,7 @@ public class Registration extends ActionBarActivity {
 			@Override
 			public void onClick(View v) 
 			{
-				tv_phoneOrEmail.setText(tv_phoneOrEmail.getText() + "6");
+				tv_dollars.setText(tv_dollars.getText() + "6");
 			}
 		});
 		button_numbers[7].setOnClickListener(new View.OnClickListener() 
@@ -134,7 +136,7 @@ public class Registration extends ActionBarActivity {
 			@Override
 			public void onClick(View v) 
 			{
-				tv_phoneOrEmail.setText(tv_phoneOrEmail.getText() + "7");
+				tv_dollars.setText(tv_dollars.getText() + "7");
 			}
 		});
 		button_numbers[8].setOnClickListener(new View.OnClickListener() 
@@ -142,7 +144,7 @@ public class Registration extends ActionBarActivity {
 			@Override
 			public void onClick(View v) 
 			{
-				tv_phoneOrEmail.setText(tv_phoneOrEmail.getText() + "8");
+				tv_dollars.setText(tv_dollars.getText() + "8");
 			}
 		});
 		button_numbers[9].setOnClickListener(new View.OnClickListener() 
@@ -150,7 +152,7 @@ public class Registration extends ActionBarActivity {
 			@Override
 			public void onClick(View v) 
 			{
-				tv_phoneOrEmail.setText(tv_phoneOrEmail.getText() + "9");
+				tv_dollars.setText(tv_dollars.getText() + "9");
 			}
 		});
 		button_del.setOnClickListener(new View.OnClickListener() 
@@ -158,28 +160,28 @@ public class Registration extends ActionBarActivity {
 			@Override
 			public void onClick(View v) 
 			{
-				int length = tv_phoneOrEmail.getText().length();
+				int length = tv_dollars.getText().length();
 				if(length > 0)
-					tv_phoneOrEmail.setText(tv_phoneOrEmail.getText().subSequence(0, length-1));
+					tv_dollars.setText(tv_dollars.getText().subSequence(0, length-1));
 			}
 		});
-		button_abc.setOnClickListener(new View.OnClickListener() {
+		button_abc.setClickable(false);
+		button_next.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				tv_phoneOrEmail.requestFocus();
-
-				tv_phoneOrEmail.postDelayed(new Runnable() {
-
-		            @Override
-		            public void run() {
-		                // TODO Auto-generated method stub
-		                InputMethodManager keyboard = (InputMethodManager)
-		                getSystemService(Context.INPUT_METHOD_SERVICE);
-		                keyboard.showSoftInput(tv_phoneOrEmail, 0);
-		            }
-		        },200);
+				Intent i = new Intent(getApplicationContext(), SendActivity.class);
+                startActivity(i);
+			}
+		});
+		button_skip.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent i = new Intent(getApplicationContext(), SendActivity.class);
+                startActivity(i);
 			}
 		});
 	}

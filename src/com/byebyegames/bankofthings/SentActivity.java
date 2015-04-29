@@ -1,44 +1,36 @@
 package com.byebyegames.bankofthings;
 
 import android.support.v7.app.ActionBarActivity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.ListView;
 
-public class HistoryActivity extends ActionBarActivity {
-	
-	Button button_back;
-	ListView lv_recieved;
+public class SentActivity extends ActionBarActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_history);
+		setContentView(R.layout.activity_sent);
 		
-		button_back = (Button) findViewById(R.id.buttonback);
-		
-		button_back.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Intent i = new Intent(getApplicationContext(), SendActivity.class);
-                startActivity(i);
-			}
-		});
-		
+		new CountDownTimer(2000, 1000) {
+
+		     public void onTick(long millisUntilFinished) {
+		        
+		     }
+
+		     public void onFinish() {
+		    	 Intent i = new Intent(getApplicationContext(), SendActivity.class);
+		    	 startActivityForResult(i, 3);
+		     }
+		  }.start();
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.history, menu);
+		getMenuInflater().inflate(R.menu.sent, menu);
 		return true;
 	}
 

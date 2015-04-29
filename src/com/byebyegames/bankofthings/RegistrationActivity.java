@@ -5,27 +5,26 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.CursorAnchorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class SendActivity extends ActionBarActivity {
+public class RegistrationActivity extends ActionBarActivity {
 
 	Button[] button_numbers;
 	
-	Button button_period, button_del, button_send,
-		button_settings, button_history;
-	EditText editText_Dollars;
+	Button button_abc, button_del, button_next;
+	EditText tv_phoneOrEmail;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_send);
+		setContentView(R.layout.activity_registration);
 		
 		// initialize button array
 		button_numbers = new Button[10];
@@ -41,35 +40,19 @@ public class SendActivity extends ActionBarActivity {
 		button_numbers[7] = (Button) findViewById(R.id.button7);
 		button_numbers[8] = (Button) findViewById(R.id.button8);
 		button_numbers[9] = (Button) findViewById(R.id.button9);
-
-		button_send = (Button) findViewById(R.id.buttonsend);
-		button_send.setClickable(false);
 		
-		button_history = (Button) findViewById(R.id.buttonhistory);
-		button_settings = (Button) findViewById(R.id.buttonsettings);
-		button_period = (Button) findViewById(R.id.buttonperiod);
+		button_next = (Button) findViewById(R.id.buttonnext);
+		button_abc = (Button) findViewById(R.id.buttonabc);
 		button_del = (Button) findViewById(R.id.buttondel);
 		
 		// leash text view
-		editText_Dollars= (EditText) findViewById(R.id.editViewDollars);
-		editText_Dollars.setText("$0");
+		tv_phoneOrEmail = (EditText) findViewById(R.id.textViewDollars);
+		
 		
 		// initialize button on click methods
 		initializeButtons();
-		button_send.setClickable(false);
 	}
 
-	
-	@Override
-	public void onResume()
-	{
-		super.onResume();
-		if(editText_Dollars.getText().toString().equals("$0"))
-			button_send.setClickable(false);
-		else
-			button_send.setClickable(true);
-	}
-	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -96,9 +79,7 @@ public class SendActivity extends ActionBarActivity {
 			@Override
 			public void onClick(View v) 
 			{
-				initializeHelper(0);
-
-				button_send.setClickable(false);
+				tv_phoneOrEmail.setText(tv_phoneOrEmail.getText() + "0");
 			}
 		});
 		button_numbers[1].setOnClickListener(new View.OnClickListener() 
@@ -106,7 +87,7 @@ public class SendActivity extends ActionBarActivity {
 			@Override
 			public void onClick(View v) 
 			{
-				initializeHelper(1);
+				tv_phoneOrEmail.setText(tv_phoneOrEmail.getText() + "1");
 			}
 		});
 		button_numbers[2].setOnClickListener(new View.OnClickListener() 
@@ -114,7 +95,7 @@ public class SendActivity extends ActionBarActivity {
 			@Override
 			public void onClick(View v) 
 			{
-				initializeHelper(2);
+				tv_phoneOrEmail.setText(tv_phoneOrEmail.getText() + "2");
 			}
 		});
 		button_numbers[3].setOnClickListener(new View.OnClickListener() 
@@ -122,7 +103,7 @@ public class SendActivity extends ActionBarActivity {
 			@Override
 			public void onClick(View v) 
 			{
-				initializeHelper(3);
+				tv_phoneOrEmail.setText(tv_phoneOrEmail.getText() + "3");
 			}
 		});
 		button_numbers[4].setOnClickListener(new View.OnClickListener() 
@@ -130,7 +111,7 @@ public class SendActivity extends ActionBarActivity {
 			@Override
 			public void onClick(View v) 
 			{
-				initializeHelper(4);
+				tv_phoneOrEmail.setText(tv_phoneOrEmail.getText() + "4");
 			}
 		});
 		button_numbers[5].setOnClickListener(new View.OnClickListener() 
@@ -138,7 +119,7 @@ public class SendActivity extends ActionBarActivity {
 			@Override
 			public void onClick(View v) 
 			{
-				initializeHelper(5);
+				tv_phoneOrEmail.setText(tv_phoneOrEmail.getText() + "5");
 			}
 		});
 		button_numbers[6].setOnClickListener(new View.OnClickListener() 
@@ -146,7 +127,7 @@ public class SendActivity extends ActionBarActivity {
 			@Override
 			public void onClick(View v) 
 			{
-				initializeHelper(6);
+				tv_phoneOrEmail.setText(tv_phoneOrEmail.getText() + "6");
 			}
 		});
 		button_numbers[7].setOnClickListener(new View.OnClickListener() 
@@ -154,7 +135,7 @@ public class SendActivity extends ActionBarActivity {
 			@Override
 			public void onClick(View v) 
 			{
-				initializeHelper(7);
+				tv_phoneOrEmail.setText(tv_phoneOrEmail.getText() + "7");
 			}
 		});
 		button_numbers[8].setOnClickListener(new View.OnClickListener() 
@@ -162,7 +143,7 @@ public class SendActivity extends ActionBarActivity {
 			@Override
 			public void onClick(View v) 
 			{
-				initializeHelper(8);
+				tv_phoneOrEmail.setText(tv_phoneOrEmail.getText() + "8");
 			}
 		});
 		button_numbers[9].setOnClickListener(new View.OnClickListener() 
@@ -170,7 +151,7 @@ public class SendActivity extends ActionBarActivity {
 			@Override
 			public void onClick(View v) 
 			{
-				initializeHelper(9);
+				tv_phoneOrEmail.setText(tv_phoneOrEmail.getText() + "9");
 			}
 		});
 		button_del.setOnClickListener(new View.OnClickListener() 
@@ -178,63 +159,38 @@ public class SendActivity extends ActionBarActivity {
 			@Override
 			public void onClick(View v) 
 			{
-				int length = editText_Dollars.getText().length();
-				if(length > 1 && editText_Dollars.getText().charAt(1) != '0')
-					editText_Dollars.setText(editText_Dollars.getText().subSequence(0, length-1));
-				length = editText_Dollars.getText().length();
-				if(length == 1)
-				{
-					editText_Dollars.setText("$0");
-					button_send.setClickable(false);
-				}
+				int length = tv_phoneOrEmail.getText().length();
+				if(length > 0)
+					tv_phoneOrEmail.setText(tv_phoneOrEmail.getText().subSequence(0, length-1));
 			}
 		});
-		button_period.setOnClickListener(new View.OnClickListener() {
+		button_abc.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				editText_Dollars.setText(editText_Dollars.getText() + ".");
+				tv_phoneOrEmail.requestFocus();
+
+				tv_phoneOrEmail.postDelayed(new Runnable() {
+
+		            @Override
+		            public void run() {
+		                // TODO Auto-generated method stub
+		                InputMethodManager keyboard = (InputMethodManager)
+		                getSystemService(Context.INPUT_METHOD_SERVICE);		             
+		                keyboard.showSoftInput(tv_phoneOrEmail, 0);
+		            }
+		        },200);
 			}
 		});
-		button_send.setOnClickListener(new View.OnClickListener() {
+		button_next.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent i = new Intent(getApplicationContext(), ToActivity.class);
+				Intent i = new Intent(getApplicationContext(), LinkingActivity.class);
                 startActivity(i);
 			}
 		});
-		button_settings.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Intent i = new Intent(getApplicationContext(), SettingActivity.class);
-                startActivityForResult(i,6);
-			}
-		});
-		button_history.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Intent i = new Intent(getApplicationContext(), HistoryActivity.class);
-				startActivityForResult(i,4);
-			}
-		});
-	}
-	
-	public void initializeHelper(int number)
-	{
-		if(editText_Dollars.getText().toString().equals("$0"))
-		{
-			editText_Dollars.setText("$"+ Integer.toString(number));
-		}else{
-			editText_Dollars.setText(editText_Dollars.getText() + Integer.toString(number));
-		}
-		
-		button_send.setClickable(true);
 	}
 }
